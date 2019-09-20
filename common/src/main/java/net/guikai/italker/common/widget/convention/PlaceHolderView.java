@@ -6,6 +6,7 @@ import android.support.annotation.StringRes;
  * Description: 基础的占位布局接口定义
  * Crete by Anding on 2019-09-18
  */
+@SuppressWarnings("unused")
 public interface PlaceHolderView {
 
     /**
