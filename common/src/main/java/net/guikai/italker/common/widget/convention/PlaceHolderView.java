@@ -25,7 +25,7 @@ public interface PlaceHolderView {
      * 加载错误，显示错误信息
      * @param strRes 错误信息
      */
-    void triggerDataError(@StringRes int strRes);
+    void triggerError(@StringRes int strRes);
 
     /**
      * 显示正在加载的状态

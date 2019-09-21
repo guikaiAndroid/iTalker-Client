@@ -117,7 +117,7 @@ public class EmptyView extends LinearLayout implements PlaceHolderView {
      * {@inheritDoc}
      */
     @Override
-    public void triggerDataError(@StringRes int strRes) {
+    public void triggerError(@StringRes int strRes) {
         setVisibility(VISIBLE);
         changeBindViewVisibility(GONE);
     }
