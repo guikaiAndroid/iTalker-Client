@@ -5,7 +5,7 @@ import android.content.Context;
 import net.guikai.italker.common.presenter.BaseContract;
 
 /**
- * Description: PresenterFragment在Base上进行MVP的封装
+ * Description: PresenterFragment在BaseFragment上进行MVP的封装
  * Crete by Anding on 2019-09-20
  */
 public abstract class PresenterFragment<Presenter extends BaseContract.Presenter>
