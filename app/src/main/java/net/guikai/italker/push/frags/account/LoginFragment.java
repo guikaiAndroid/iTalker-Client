@@ -8,6 +8,8 @@ import net.guikai.italker.factory.presenter.account.LoginPresenter;
 import net.guikai.italker.push.R;
 import net.guikai.italker.push.activities.AccountTrigger;
 
+import butterknife.OnClick;
+
 /**
  * Description: 登录碎片界面
  * Crete by Anding on 2019-12-22
@@ -21,6 +23,12 @@ public class LoginFragment extends PresenterFragment<LoginContract.Presenter>
     public void onAttach(Context context) {
         super.onAttach(context);
         mAccountTrigger = (AccountTrigger) context;
+    }
+
+    @OnClick(R.id.txt_go_register)
+    void onShowRegisterClick() {
+        // 让AccountActivity进行碎片切换
+        mAccountTrigger.triggerView();
     }
 
     @Override
