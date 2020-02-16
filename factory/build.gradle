@@ -35,4 +35,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     api project(path: ':common')
+
+    api "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
+    api "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofitVersion"
+    api "com.google.code.gson:gson:$rootProject.ext.gsonVersion"
 }
