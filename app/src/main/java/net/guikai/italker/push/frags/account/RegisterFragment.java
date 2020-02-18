@@ -59,7 +59,7 @@ public class RegisterFragment extends PresenterFragment<RegisterContract.Present
     @OnClick(R.id.btn_submit)
     void onSubmitClick() {
         String phone = mPhone.getText().toString();
-        String name = mPhone.getText().toString();
+        String name = mName.getText().toString();
         String password = mPassword.getText().toString();
         // 调用P层进行逻辑处理
         mPresenter.register(phone,name,password);

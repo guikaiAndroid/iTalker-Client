@@ -9,6 +9,18 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        //个推相关参数
+        manifestPlaceholders = [
+                GETUI_APP_ID    : "qji36o9TeQ71iJTy6mx4W1",
+                GETUI_APP_KEY   : "ud7n7erC7H66MDJxDVU8v4",
+                GETUI_APP_SECRET: "lbj9SZf4Et7pTx5frp9im3",
+                PACKAGE_NAME    : applicationId
+        ]
+
+        ndk {
+            abiFilters "x86", "x86_64", "arm64-v8a", "armeabi-v7a", 'armeabi'
+        }
     }
     buildTypes {
         release {
@@ -44,6 +56,12 @@ dependencies {
 
     api "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
+
+    api "com.getui:sdk:$rootProject.ext.getuiVersion"
+
+    api 'com.android.support.constraint:constraint-layout:1.1.3'
+    api "com.android.support:support-v4:$rootProject.ext.supportVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
     testImplementation 'junit:junit:4.12'
 

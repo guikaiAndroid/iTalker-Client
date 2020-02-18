@@ -1,5 +1,8 @@
 package net.guikai.italker.factory.data.helper;
 
+import android.util.Log;
+
+import net.guikai.italker.factory.Factory;
 import net.guikai.italker.factory.R;
 import net.guikai.italker.factory.data.DataSource;
 import net.guikai.italker.factory.model.api.RspModel;
@@ -21,10 +24,11 @@ public class AccountHelper {
 
     /**
      * 注册的接口，异步的调用
-     * @param model
-     * @param callBack
+     *
+     * @param model  传递一个注册的Model进来
+     * @param callBack  成功与失败的接口回送
      */
-    public static void register(final RegisterModel model, final DataSource.CallBack<User> callBack){
+    public static void register(final RegisterModel model, final DataSource.CallBack<User> callBack) {
         // 调用Retrofit对我们的网络请求接口做代理
         RemoteService service = Network.remote();
         // 得到一个Call
@@ -53,7 +57,7 @@ public class AccountHelper {
 
         final DataSource.CallBack<User> callback;
 
-        public AccountRspCallback(DataSource.CallBack<User> callBack) {
+        AccountRspCallback(DataSource.CallBack<User> callBack) {
             this.callback = callBack;
         }
 
@@ -68,12 +72,21 @@ public class AccountHelper {
                 // 获取我的信息
                 User user = accountRspModel.getUser();
                 callback.onDataLoaded(user);
+                // 数据库持久化
+                //TODO
+                // 绑定设备ID
+            } else {
+                Factory.decodeRspCode(rspModel, callback);
             }
         }
 
         @Override
         public void onFailure(Call<RspModel<AccountRspModel>> call, Throwable t) {
-            callback.onDataNotAvailable(R.string.data_network_error);
+            //网络请求失败
+            if (call != null) {
+                callback.onDataNotAvailable(R.string.data_network_error);
+                Log.e("xxx", "onFailure: "+t.toString());
+            }
         }
     }
 }
