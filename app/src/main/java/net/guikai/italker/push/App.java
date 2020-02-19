@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.igexin.sdk.PushManager;
 
 import net.guikai.italker.common.app.BaseApplication;
+import net.guikai.italker.factory.Factory;
 
 /**
  * Description: 全局Application
@@ -15,6 +16,9 @@ public class App extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // 调用Factory进行初始化
+        Factory.setup();
 
         // 注册生命周期
         registerActivityLifecycleCallbacks(new PushInitializeLifecycle());

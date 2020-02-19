@@ -22,7 +22,7 @@ public class RegisterPresenter extends BasePresenter<RegisterContract.View>
         implements RegisterContract.Presenter, DataSource.CallBack<User> {
 
     // 得到View接口
-    final RegisterContract.View view = getView();
+    private final RegisterContract.View view = getView();
 
     public RegisterPresenter(RegisterContract.View view) {
         super(view);
@@ -80,6 +80,7 @@ public class RegisterPresenter extends BasePresenter<RegisterContract.View>
     // 数据失败后的接口回调
     @Override
     public void onDataNotAvailable(final int strRes) {
+        final RegisterContract.View view = getView();
         if (view == null)
             return;
         Run.onUiAsync(new Action() {

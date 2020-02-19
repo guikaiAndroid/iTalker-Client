@@ -16,5 +16,7 @@ public interface LoginContract {
     interface Presenter extends BaseContract.Presenter {
         // 发起一个登录操(逻辑操作)
         void login(String phone,String password);
+        // 检查手机号是否正确
+        boolean checkMobile(String phone);
     }
 }

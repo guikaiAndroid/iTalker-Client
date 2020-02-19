@@ -1,7 +1,6 @@
 package net.guikai.italker.factory.data.helper;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import net.guikai.italker.factory.Factory;
 import net.guikai.italker.factory.R;
@@ -105,11 +104,26 @@ public class AccountHelper {
                 AccountRspModel accountRspModel = rspModel.getResult();
                 // 获取我的信息
                 User user = accountRspModel.getUser();
-                callback.onDataLoaded(user);
+
                 // 数据库持久化
-                //TODO
-                // 绑定设备ID
+                DbHelper.save(User.class, user);
+
+                // 同步到XML持久化中
+                Account.login(accountRspModel);
+
+                // 判断绑定状态，是否绑定设备
+                if (accountRspModel.isBind()) {
+                    // 设置绑定状态为True
+                    Account.setBind(true);
+                    // 然后返回
+                    if (callback != null)
+                        callback.onDataLoaded(user);
+                } else {
+                    // 没有绑定则进行绑定的唤起，调用接口
+                    bindPush(callback);
+                }
             } else {
+                // 错误解析
                 Factory.decodeRspCode(rspModel, callback);
             }
         }

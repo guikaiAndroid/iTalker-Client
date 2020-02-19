@@ -13,6 +13,7 @@ import android.view.View;
 import net.guikai.italker.common.app.BaseActivity;
 import net.guikai.italker.factory.persistence.Account;
 import net.guikai.italker.push.activities.AccountActivity;
+import net.guikai.italker.push.activities.MainActivity;
 import net.qiujuer.genius.res.Resource;
 import net.qiujuer.genius.ui.compat.UiCompat;
 
@@ -62,15 +63,36 @@ public class LaunchActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // 判断是否已经得到推送Id，如果已经得到则进行跳转操作，
+        // 在操作中检测权限状态
+        if (mAlreadyGotPushReceiverId) {
+            reallySkip();
+        }
+    }
+
     /**
      * 等待个推框架对我们的PushId设置好值
      */
     private void waitPushReceiveId() {
-        // 如果拿到PushId 直接跳转
-        if (!TextUtils.isEmpty(Account.getPushId())) {
-            // 跳转
-            reallySkip();
-            return;
+        if (Account.isLogin()) {
+            // 已经登录情况下，判断是否绑定
+            // 如果没有绑定则等待广播接收器进行绑定
+            if (Account.isBind()) {
+                waitPushReceiverIdDone();
+                return;
+            }
+        } else {
+            // 没有登录
+            // 如果拿到PushId 直接跳转
+            if (!TextUtils.isEmpty(Account.getPushId())) {
+                // 跳转
+                waitPushReceiverIdDone();
+                return;
+            }
         }
 
         // 没有拿到PushId 循环等待
@@ -90,7 +112,12 @@ public class LaunchActivity extends BaseActivity {
      * 真实的跳转
      */
     private void reallySkip() {
-        AccountActivity.show(this);
+        // 权限检测，跳转
+        if (Account.isLogin()) {
+            MainActivity.show(this);
+        } else {
+            AccountActivity.show(this);
+        }
         finish();
     }
 
