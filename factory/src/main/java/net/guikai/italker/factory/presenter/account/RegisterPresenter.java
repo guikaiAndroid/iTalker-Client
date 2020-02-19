@@ -21,6 +21,9 @@ import java.util.regex.Pattern;
 public class RegisterPresenter extends BasePresenter<RegisterContract.View>
         implements RegisterContract.Presenter, DataSource.CallBack<User> {
 
+    // 得到View接口
+    final RegisterContract.View view = getView();
+
     public RegisterPresenter(RegisterContract.View view) {
         super(view);
     }
@@ -29,9 +32,6 @@ public class RegisterPresenter extends BasePresenter<RegisterContract.View>
     public void register(String phone, String name, String password) {
         // 调用开始方法，在Base中默认开始启动Loading
         start();
-
-        // 得到View接口
-        RegisterContract.View view = getView();
 
         // 校验
         if (!checkMobile(phone)) {
@@ -45,9 +45,9 @@ public class RegisterPresenter extends BasePresenter<RegisterContract.View>
         } else {
             // 开始进行网络请求
             // 构造请求Model, 进行请求调用
-            RegisterModel model = new RegisterModel(phone,password,name);
+            RegisterModel model = new RegisterModel(phone, password, name);
             //进行网络请求
-            AccountHelper.register(model,this);
+            AccountHelper.register(model, this);
         }
     }
 
@@ -61,34 +61,32 @@ public class RegisterPresenter extends BasePresenter<RegisterContract.View>
     public boolean checkMobile(String phone) {
         //  手机号不能为空，并且满足手机格式
         return !TextUtils.isEmpty(phone)
-                && Pattern.matches(Common.Constance.REGEX_MOBILE,phone);
+                && Pattern.matches(Common.Constance.REGEX_MOBILE, phone);
     }
 
     // 数据成功后的接口回调
     @Override
     public void onDataLoaded(User user) {
-        final RegisterContract.View view = getView();
-        if (view==null)
+        if (view == null)
             return;
-            Run.onUiAsync(new Action() {
-                @Override
-                public void call() {
-                    view.registerSuccess();
-                }
-            });
+        Run.onUiAsync(new Action() {
+            @Override
+            public void call() {
+                view.registerSuccess();
+            }
+        });
     }
 
     // 数据失败后的接口回调
     @Override
     public void onDataNotAvailable(final int strRes) {
-        final RegisterContract.View view = getView();
-        if (view==null)
+        if (view == null)
             return;
-            Run.onUiAsync(new Action() {
-                @Override
-                public void call() {
-                    view.showError(strRes);
-                }
-            });
+        Run.onUiAsync(new Action() {
+            @Override
+            public void call() {
+                view.showError(strRes);
+            }
+        });
     }
 }

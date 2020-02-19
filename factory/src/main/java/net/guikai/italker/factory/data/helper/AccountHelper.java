@@ -1,5 +1,6 @@
 package net.guikai.italker.factory.data.helper;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import net.guikai.italker.factory.Factory;
@@ -7,10 +8,12 @@ import net.guikai.italker.factory.R;
 import net.guikai.italker.factory.data.DataSource;
 import net.guikai.italker.factory.model.api.RspModel;
 import net.guikai.italker.factory.model.api.account.AccountRspModel;
+import net.guikai.italker.factory.model.api.account.LoginModel;
 import net.guikai.italker.factory.model.api.account.RegisterModel;
 import net.guikai.italker.factory.model.db.User;
 import net.guikai.italker.factory.net.Network;
 import net.guikai.italker.factory.net.RemoteService;
+import net.guikai.italker.factory.persistence.Account;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,6 +54,37 @@ public class AccountHelper {
     }
 
     /**
+     * 登录的调用
+     *
+     * @param model    登录的Model
+     * @param callback 成功与失败的接口回送
+     */
+    public static void login(final LoginModel model, final DataSource.CallBack<User> callback) {
+        // 调用Retrofit对我们的网络请求接口做代理
+        RemoteService service = Network.remote();
+        // 得到一个Call
+        Call<RspModel<AccountRspModel>> call = service.accountLogin(model);
+        // 异步的请求
+        call.enqueue(new AccountRspCallback(callback));
+    }
+
+    /**
+     * 对设备Id进行绑定的操作
+     *
+     * @param callback Callback
+     */
+    public static void bindPush(final DataSource.CallBack<User> callback) {
+        // 检查是否为空
+        String pushId = Account.getPushId();
+        if (TextUtils.isEmpty(pushId))
+            return;
+        // 调用Retrofit对我们的网络请求接口做代理
+        RemoteService service = Network.remote();
+        Call<RspModel<AccountRspModel>> call = service.accountBind(pushId);
+        call.enqueue(new AccountRspCallback(callback));
+    }
+
+    /**
      * 请求的得到的回调部分封装类
      */
     public static class AccountRspCallback implements Callback<RspModel<AccountRspModel>> {
@@ -85,7 +119,6 @@ public class AccountHelper {
             //网络请求失败
             if (call != null) {
                 callback.onDataNotAvailable(R.string.data_network_error);
-                Log.e("xxx", "onFailure: "+t.toString());
             }
         }
     }
