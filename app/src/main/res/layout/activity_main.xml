@@ -87,8 +87,8 @@
         android:elevation="@dimen/len_4"
         android:outlineProvider="bounds"
         android:translationZ="@dimen/len_8"
-        app:itemIconTint="@color/text_nav"
-        app:itemTextColor="@color/text_nav"
+        app:itemIconTint="@color/cb_group_contact"
+        app:itemTextColor="@color/cb_group_contact"
         app:menu="@menu/navigation_items"
         tools:targetApi="lollipop"
         tools:visibility="invisible" />
