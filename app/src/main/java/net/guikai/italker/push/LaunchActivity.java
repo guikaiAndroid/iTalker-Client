@@ -95,7 +95,7 @@ public class LaunchActivity extends BaseActivity {
             }
         }
 
-        // 没有拿到PushId 循环等待
+        // 没有登录 也没有拿到PushId 循环等待个推的id
         getWindow().getDecorView().postDelayed(this::waitPushReceiveId, 500);
     }
 

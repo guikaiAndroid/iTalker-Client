@@ -43,20 +43,6 @@
             android:label="AppMessageReceiverService"
             android:permission="1000" />
 
-        <activity
-            android:name=".activities.MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Main">
-
-        </activity>
-
-        <activity
-            android:name=".activities.AccountActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Account" >
-
-        </activity>
-
         <activity android:name=".LaunchActivity"
             android:label="@string/title_activity_launch"
             android:theme="@style/AppTheme.TransStatusBar">
@@ -65,6 +51,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Main"/>
+        <activity
+            android:name=".activities.AccountActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Account" />
+        <activity
+            android:name=".activities.UserActivity"
+            android:label="@string/title_activity_user"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Account" />
     </application>
 
 </manifest>

@@ -19,6 +19,7 @@ import com.bumptech.glide.request.target.ViewTarget;
 
 import net.guikai.italker.common.app.BaseActivity;
 import net.guikai.italker.common.widget.PortraitView;
+import net.guikai.italker.factory.persistence.Account;
 import net.guikai.italker.push.R;
 import net.guikai.italker.push.frags.main.ActiveFragment;
 import net.guikai.italker.push.frags.main.ContactFragment;
@@ -72,8 +73,13 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected boolean initArgs(Bundle bundle) {
-        // 判断用户信息是否完全
-        return super.initArgs(bundle);
+        if (Account.isComplete()) {
+            // 判断用户信息是否完全
+            return super.initArgs(bundle);
+        } else {
+            UserActivity.show(this);
+            return false;
+        }
     }
 
     @Override
