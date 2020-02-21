@@ -1,5 +1,6 @@
 package net.guikai.italker.push.frags.media;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -10,8 +11,10 @@ import android.support.design.widget.BottomSheetDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.FrameLayout;
 
+import net.guikai.italker.common.tools.UiTool;
 import net.guikai.italker.common.widget.GalleryView;
 import net.guikai.italker.push.R;
 
@@ -31,7 +34,7 @@ public class GalleryFragment extends BottomSheetDialogFragment
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // 返回一个我们复写的
-        return new BottomSheetDialog(Objects.requireNonNull(getContext()));
+        return new TransStatusBottomSheetDialog(Objects.requireNonNull(getContext()),R.style.CustomBottomSheetDialogTheme);
     }
 
     @Nullable
@@ -83,5 +86,42 @@ public class GalleryFragment extends BottomSheetDialogFragment
      */
     public interface OnSelectedListener {
         void onSelectedImage(String path);
+    }
+
+    /**
+     * 为了解决顶部状态栏变黑而写的TransStatusBottomSheetDialog
+     */
+    public static class TransStatusBottomSheetDialog extends BottomSheetDialog {
+
+
+        public TransStatusBottomSheetDialog(@NonNull Context context) {
+            super(context);
+        }
+
+        public TransStatusBottomSheetDialog(@NonNull Context context, int theme) {
+            super(context, theme);
+        }
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            final Window window = getWindow();
+            if (window == null)
+                return;
+            Activity ownerActivity = getOwnerActivity();
+            if (ownerActivity == null) {
+                return;
+            }
+
+            // 得到屏幕高度
+            final int screenHeight = UiTool.getScreenHeight(ownerActivity);
+            // 得到状态栏的高度
+            final int statusHeight = UiTool.getStatusBarHeight(ownerActivity);
+
+            // 计算dialog的高度并设置
+            final int dialogHeight = screenHeight - statusHeight;
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dialogHeight <= 0 ? ViewGroup.LayoutParams.MATCH_PARENT : dialogHeight);
+        }
     }
 }
