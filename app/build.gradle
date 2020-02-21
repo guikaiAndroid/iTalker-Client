@@ -57,6 +57,9 @@ dependencies {
     api "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
 
+    api "com.yalantis:ucrop:$rootProject.ext.ucropVersion"
+    api "pub.devrel:easypermissions:$rootProject.ext.easyPMVersion"
+
     api "com.getui:sdk:$rootProject.ext.getuiVersion"
 
     api 'com.android.support.constraint:constraint-layout:1.1.3'
