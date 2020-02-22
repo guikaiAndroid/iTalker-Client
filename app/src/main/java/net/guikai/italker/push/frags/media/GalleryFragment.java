@@ -34,7 +34,7 @@ public class GalleryFragment extends BottomSheetDialogFragment
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // 返回一个我们复写的
-        return new TransStatusBottomSheetDialog(Objects.requireNonNull(getContext()),R.style.CustomBottomSheetDialogTheme);
+        return new TransStatusBottomSheetDialog(Objects.requireNonNull(getContext()));
     }
 
     @Nullable
@@ -95,7 +95,7 @@ public class GalleryFragment extends BottomSheetDialogFragment
 
 
         public TransStatusBottomSheetDialog(@NonNull Context context) {
-            super(context);
+            super(context,R.style.CustomBottomSheetDialogTheme);
         }
 
         public TransStatusBottomSheetDialog(@NonNull Context context, int theme) {
@@ -105,7 +105,6 @@ public class GalleryFragment extends BottomSheetDialogFragment
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-
             final Window window = getWindow();
             if (window == null)
                 return;

@@ -123,6 +123,28 @@ public class BaseApplication extends Application {
     }
 
     /**
+     * 获取声音文件的本地地址
+     *
+     * @param isTmp 是否是缓存文件， True，每次返回的文件地址是一样的
+     * @return 录音文件的地址
+     */
+    public static File getAudioTmpFile(boolean isTmp) {
+        File dir = new File(getCacheDirFile(), "audio");
+        //noinspection ResultOfMethodCallIgnored
+        dir.mkdirs();
+        File[] files = dir.listFiles();
+        if (files != null && files.length > 0) {
+            for (File file : files) {
+                //noinspection ResultOfMethodCallIgnored
+                file.delete();
+            }
+        }
+        // aar
+        File path = new File(getCacheDirFile(), isTmp ? "tmp.mp3" : SystemClock.uptimeMillis() + ".mp3");
+        return path.getAbsoluteFile();
+    }
+
+    /**
      * 显示一个Toast
      *
      * @param msg 字符串

@@ -14,6 +14,7 @@ import net.guikai.italker.common.app.BaseActivity;
 import net.guikai.italker.factory.persistence.Account;
 import net.guikai.italker.push.activities.AccountActivity;
 import net.guikai.italker.push.activities.MainActivity;
+import net.guikai.italker.push.frags.assist.PermissionsFragment;
 import net.qiujuer.genius.res.Resource;
 import net.qiujuer.genius.ui.compat.UiCompat;
 
@@ -113,12 +114,14 @@ public class LaunchActivity extends BaseActivity {
      */
     private void reallySkip() {
         // 权限检测，跳转
-        if (Account.isLogin()) {
-            MainActivity.show(this);
-        } else {
-            AccountActivity.show(this);
+        if (PermissionsFragment.haveAll(this, getSupportFragmentManager())) {
+            if (Account.isLogin()) {
+                MainActivity.show(this);
+            } else {
+                AccountActivity.show(this);
+            }
+            finish();
         }
-        finish();
     }
 
     private void startAnim(float endProgress, final Runnable endCallback) {
