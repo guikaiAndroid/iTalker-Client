@@ -17,6 +17,7 @@ import net.guikai.italker.common.widget.PortraitView;
 import net.guikai.italker.factory.presenter.user.UpdateInfoContract;
 import net.guikai.italker.factory.presenter.user.UpdateInfoPresenter;
 import net.guikai.italker.push.R;
+import net.guikai.italker.push.activities.MainActivity;
 import net.guikai.italker.push.frags.media.GalleryFragment;
 import net.qiujuer.genius.ui.widget.Loading;
 
@@ -86,7 +87,7 @@ public class UpdateInfoFragment extends PresenterFragment<UpdateInfoContract.Pre
                                 .start(getActivity());
                     }
                 })
-                .show(getChildFragmentManager(),GalleryFragment.class.getName());
+                .show(getChildFragmentManager(), GalleryFragment.class.getName());
     }
 
     @Override
@@ -132,8 +133,47 @@ public class UpdateInfoFragment extends PresenterFragment<UpdateInfoContract.Pre
         mSex.getBackground().setLevel(isMan ? 0 : 1);
     }
 
+    @OnClick(R.id.btn_submit)
+    void onSubmitClick() {
+        String desc = mDesc.getText().toString();
+        // 进行P层逻辑注册
+        mPresenter.update(mPortraitPath, desc, isMan);
+    }
+
+    @Override
+    public void showError(int str) {
+        super.showError(str);
+        // 当需要显示错误的时候触发，一定是结束了
+
+        // 停止Loading
+        mLoading.stop();
+        // 让控件可以输入
+        mDesc.setEnabled(true);
+        mPortrait.setEnabled(true);
+        mSex.setEnabled(true);
+        // 提交按钮可以继续点击
+        mSubmit.setEnabled(true);
+    }
+
+    @Override
+    public void showLoading() {
+        super.showLoading();
+
+        // 正在进行时，正在进行注册，界面不可操作
+        // 开始Loading
+        mLoading.start();
+        // 让控件不可以输入
+        mDesc.setEnabled(false);
+        mPortrait.setEnabled(false);
+        mSex.setEnabled(false);
+        // 提交按钮不可以继续点击
+        mSubmit.setEnabled(false);
+    }
+
     @Override
     public void updateSucceed() {
-
+        // 更新成功跳转到主界面
+        MainActivity.show(getContext());
+        getActivity().finish();
     }
 }
