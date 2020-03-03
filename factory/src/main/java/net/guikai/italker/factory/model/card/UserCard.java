@@ -1,5 +1,6 @@
 package net.guikai.italker.factory.model.card;
 
+import net.guikai.italker.factory.model.Author;
 import net.guikai.italker.factory.model.db.User;
 
 import java.util.Date;
@@ -8,7 +9,7 @@ import java.util.Date;
  * Description: 用户卡片，用于接收服务器返回
  * Crete by Anding on 2020-02-23
  */
-public class UserCard {
+public class UserCard implements Author {
     private String id;
     private String name;
     private String phone;
