@@ -1,6 +1,7 @@
 package net.guikai.italker.factory.presenter.contact;
 
 import android.support.annotation.NonNull;
+import android.support.v7.util.DiffUtil;
 
 import com.raizlabs.android.dbflow.config.DatabaseDefinition;
 import com.raizlabs.android.dbflow.config.FlowManager;
@@ -18,6 +19,7 @@ import net.guikai.italker.factory.model.db.AppDatabase;
 import net.guikai.italker.factory.model.db.User;
 import net.guikai.italker.factory.model.db.User_Table;
 import net.guikai.italker.factory.persistence.Account;
+import net.guikai.italker.factory.utils.DiffUiDataCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,8 +82,10 @@ public class ContactPresenter extends BasePresenter<ContactContract.View>
                 }).build().execute();
 
                 // 网络数据是最新的 我们需要直接刷新到界面
-                getView().getRecyclerAdapter().replace(users);
-                getView().onAdapterDataChanged();
+                List<User> old = getView().getRecyclerAdapter().getItems();
+
+
+                diff(old,users);
             }
         });
 
@@ -89,5 +93,21 @@ public class ContactPresenter extends BasePresenter<ContactContract.View>
         // 1.关注后虽然存储数据库，但是没有刷新联系人页面
         // 2.如果刷新数据库，或者从网络刷新，最终刷新的时候是全局刷新
         // 3.本地刷新和网络刷新，再添加到界面的时候会有可能冲突 导致数据显示异常
+        // 4.如何识别已经在数据库中有这样的数据
+
+    }
+
+    private void diff(List<User> oldList,List<User> newList) {
+        // 进行数据对比
+        DiffUtil.Callback callback = new DiffUiDataCallback<User>(oldList,newList);
+        DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
+
+        // 对比完成进行数据赋值
+        getView().getRecyclerAdapter().replace(newList);
+
+        // 刷新界面
+        result.dispatchUpdatesTo(getView().getRecyclerAdapter() );
+        getView().onAdapterDataChanged();
+
     }
 }

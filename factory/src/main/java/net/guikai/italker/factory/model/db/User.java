@@ -17,7 +17,7 @@ import java.util.Objects;
  * Crete by Anding on 2020-02-15
  */
 @Table(database = AppDatabase.class)
-public class User extends BaseModel implements Author {
+public class User extends BaseDbModel<User> implements Author {
     public static final int SEX_MAN = 1;
     public static final int SEX_WOMAN = 2;
 
@@ -164,5 +164,22 @@ public class User extends BaseModel implements Author {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public boolean isSame(User old) {
+        // 主要关注Id即可
+        return this == old || Objects.equals(id, old.id);
+    }
+
+    @Override
+    public boolean isUiContentSame(User old) {
+        // 显示的内容是否一样，主要判断 名字，头像，性别，是否已经关注
+        return this == old || (
+                Objects.equals(name, old.name)
+                        && Objects.equals(portrait, old.portrait)
+                        && Objects.equals(sex, old.sex)
+                        && Objects.equals(isFollow, old.isFollow)
+        );
     }
 }
