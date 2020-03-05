@@ -1,5 +1,7 @@
 package net.guikai.italker.factory.data.helper;
 
+import com.raizlabs.android.dbflow.sql.language.SQLite;
+
 import net.guikai.italker.factory.Factory;
 import net.guikai.italker.factory.R;
 import net.guikai.italker.factory.data.DataSource;
@@ -7,6 +9,7 @@ import net.guikai.italker.factory.model.api.RspModel;
 import net.guikai.italker.factory.model.api.user.UserUpdateModel;
 import net.guikai.italker.factory.model.card.UserCard;
 import net.guikai.italker.factory.model.db.User;
+import net.guikai.italker.factory.model.db.User_Table;
 import net.guikai.italker.factory.net.Network;
 import net.guikai.italker.factory.net.RemoteService;
 
@@ -138,5 +141,42 @@ public class UserHelper {
                         // nothing
                     }
                 });
+    }
+
+    // 从本地查询一个用户的信息
+    public static User findFromLocal(String id) {
+        return SQLite.select()
+                .from(User.class)
+                .where(User_Table.id.eq(id))
+                .querySingle();
+    }
+
+    // 从网络查询某用户的信息
+    public static User findFromNet(String id) {
+        RemoteService remoteService = Network.remote();
+        try {
+            Response<RspModel<UserCard>> response = remoteService.userFind(id).execute();
+            UserCard card = response.body().getResult();
+            if (card != null) {
+                User user = card.build();
+                return user;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 搜索一个用户，优先网络查询
+     * 没有用然后再从本地缓存拉取
+     */
+    public static User searchFirstOfNet(String id) {
+        User user = findFromNet(id);
+        if (user == null) {
+            return findFromLocal(id);
+        }
+        return user;
     }
 }

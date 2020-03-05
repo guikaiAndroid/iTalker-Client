@@ -117,11 +117,13 @@ public class MainActivity extends BaseActivity
         menu.performIdentifierAction(R.id.action_home, 0);
 
         // 初始化头像加载 网络
+        mPortrait.setup(Glide.with(this),Account.getUser().getPortrait());
     }
 
     @OnClick(R.id.im_portrait)
     void onPortraitCLick() {
         //点击标题头像逻辑
+        PersonalActivity.show(this,Account.getUserId());
     }
 
     @OnClick(R.id.im_search)

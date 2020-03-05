@@ -15,6 +15,7 @@ import com.bumptech.glide.request.target.ViewTarget;
 import net.guikai.italker.common.app.BaseActivity;
 import net.guikai.italker.common.app.BaseFragment;
 import net.guikai.italker.push.R;
+import net.guikai.italker.push.frags.account.AccountTrigger;
 import net.guikai.italker.push.frags.account.LoginFragment;
 import net.guikai.italker.push.frags.account.RegisterFragment;
 import net.qiujuer.genius.ui.compat.UiCompat;

@@ -8,7 +8,6 @@ import net.guikai.italker.common.app.PresenterFragment;
 import net.guikai.italker.factory.presenter.account.RegisterContract;
 import net.guikai.italker.factory.presenter.account.RegisterPresenter;
 import net.guikai.italker.push.R;
-import net.guikai.italker.push.activities.AccountTrigger;
 import net.guikai.italker.push.activities.MainActivity;
 import net.qiujuer.genius.ui.widget.Loading;
 

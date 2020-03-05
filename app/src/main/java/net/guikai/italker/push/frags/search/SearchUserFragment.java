@@ -19,6 +19,7 @@ import net.guikai.italker.factory.presenter.contact.FollowPresenter;
 import net.guikai.italker.factory.presenter.search.SearchContract;
 import net.guikai.italker.factory.presenter.search.SearchUserPresenter;
 import net.guikai.italker.push.R;
+import net.guikai.italker.push.activities.PersonalActivity;
 import net.guikai.italker.push.activities.SearchActivity;
 import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.compat.UiCompat;
@@ -132,12 +133,11 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
 
         @OnClick(R.id.im_portrait)
         void onPortraitClick() {
-
+            PersonalActivity.show(getContext(),mData.getId());
         }
 
         @OnClick(R.id.im_follow)
         void onFollowClick() {
-            // 发起关注
             // 发起关注
             mPresenter.follow(mData.getId());
         }

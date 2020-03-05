@@ -16,6 +16,7 @@ import net.guikai.italker.factory.model.db.User;
 import net.guikai.italker.factory.presenter.contact.ContactContract;
 import net.guikai.italker.factory.presenter.contact.ContactPresenter;
 import net.guikai.italker.push.R;
+import net.guikai.italker.push.activities.PersonalActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -65,6 +66,7 @@ implements ContactContract.View{
             @Override
             public void onItemClick(BaseRecyclerAdapter.ViewHolder holder, User user) {
                 // TODO 跳转到聊天界面
+
             }
         });
 
@@ -120,7 +122,8 @@ implements ContactContract.View{
 
         @OnClick(R.id.im_portrait)
         void onPortraitClick() {
-            // 显示信息
+            // 显示个人信息界面
+            PersonalActivity.show(getContext(), mData.getId());
         }
     }
 }
