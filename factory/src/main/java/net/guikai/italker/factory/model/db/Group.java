@@ -6,6 +6,7 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ import java.util.Objects;
  */
 
 @Table(database = AppDatabase.class)
-public class Group extends BaseModel {
+public class Group extends BaseDbModel<Group> implements Serializable {
     @PrimaryKey
     private String id; // 群Id
     @Column
@@ -123,7 +124,20 @@ public class Group extends BaseModel {
         return id != null ? id.hashCode() : 0;
     }
 
+    @Override
+    public boolean isSame(Group oldT) {
+        // 进行对比判断时，判断是否为一个群的信息，判断id即可
+        return Objects.equals(id, oldT.id);
+    }
 
-
+    @Override
+    public boolean isUiContentSame(Group oldT) {
+        // 如果界面显示信息有更改，只有可能是更改了：
+        // 群名称，描述，图片，以及界面显示对应的Holder
+        return Objects.equals(this.name, oldT.name)
+                && Objects.equals(this.desc, oldT.desc)
+                && Objects.equals(this.picture, oldT.picture)
+                && Objects.equals(this.holder, oldT.holder);
+    }
 
 }
