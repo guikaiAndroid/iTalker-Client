@@ -12,6 +12,7 @@ import net.guikai.italker.factory.model.db.User;
 import net.guikai.italker.factory.model.db.User_Table;
 import net.guikai.italker.factory.net.Network;
 import net.guikai.italker.factory.net.RemoteService;
+import net.guikai.italker.factory.persistence.Account;
 
 import java.util.List;
 
@@ -39,8 +40,8 @@ public class UserHelper {
                 RspModel<UserCard> rspModel = response.body();
                 if (rspModel.success()) {
                     UserCard userCard = rspModel.getResult();
-                    User user = userCard.build();
-                    user.save();
+                    // 唤起进行保存的操作
+                    Factory.getUserCenter().dispatch(userCard);
                     // 返回成功
                     callback.onDataLoaded(userCard);
                 } else {
@@ -92,12 +93,8 @@ public class UserHelper {
                 RspModel<UserCard> rspModel = response.body();
                 if (rspModel.success()) {
                     UserCard userCard = rspModel.getResult();
-                    // 保存到数据库
-                    User user = userCard.build();
-                    user.save();
-                    // TODO 通知联系人列表刷新
-
-
+                    // 唤起进行保存的操作
+                    Factory.getUserCenter().dispatch(userCard);
                     // 返回数据
                     callback.onDataLoaded(userCard);
                 } else {
@@ -113,7 +110,7 @@ public class UserHelper {
     }
 
     // 刷新联系人的操作，不需要Callback，直接存储到数据库，
-    // 并通过数据库观察者进行通知界面更新，
+    // 并通过数据库观察者进行通知界面更新(自动刷新)
     // 界面更新的时候进行对比，然后差异更新
     public static void refreshContacts(final DataSource.CallBack<List<UserCard>> callback) {
         RemoteService service = Network.remote();
@@ -129,7 +126,7 @@ public class UserHelper {
                                 return;
                             UserCard[] cards1 = cards.toArray(new UserCard[0]);
 
-                            callback.onDataLoaded(cards);
+                            Factory.getUserCenter().dispatch(cards1);
 
                         } else {
                             Factory.decodeRspCode(rspModel, null);
@@ -159,6 +156,8 @@ public class UserHelper {
             UserCard card = response.body().getResult();
             if (card != null) {
                 User user = card.build();
+                // 数据库的存储并通知
+                Factory.getUserCenter().dispatch(card);
                 return user;
             }
 
@@ -166,6 +165,18 @@ public class UserHelper {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 搜索一个用户，优先本地缓存，
+     * 没有用然后再从网络拉取
+     */
+    public static User search(String id) {
+        User user = findFromLocal(id);
+        if (user == null) {
+            return findFromNet(id);
+        }
+        return user;
     }
 
     /**
@@ -178,5 +189,18 @@ public class UserHelper {
             return findFromLocal(id);
         }
         return user;
+    }
+
+    /**
+     * 获取联系人
+     */
+    public static List<User> getContact() {
+        return SQLite.select()
+                .from(User.class)
+                .where(User_Table.isFollow.eq(true))
+                .and(User_Table.id.notEq(Account.getUserId()))
+                .orderBy(User_Table.name, true)
+                .limit(100)
+                .queryList();
     }
 }

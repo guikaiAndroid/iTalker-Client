@@ -9,6 +9,12 @@ import com.raizlabs.android.dbflow.config.FlowManager;
 
 import net.guikai.italker.common.app.BaseApplication;
 import net.guikai.italker.factory.data.DataSource;
+import net.guikai.italker.factory.data.group.GroupCenter;
+import net.guikai.italker.factory.data.group.GroupDispatcher;
+import net.guikai.italker.factory.data.message.MessageCenter;
+import net.guikai.italker.factory.data.message.MessageDispatcher;
+import net.guikai.italker.factory.data.user.UserCenter;
+import net.guikai.italker.factory.data.user.UserDispatcher;
 import net.guikai.italker.factory.model.api.RspModel;
 import net.guikai.italker.factory.persistence.Account;
 import net.guikai.italker.factory.utils.DBFlowExclusionStrategy;
@@ -152,4 +158,33 @@ public class Factory {
     private void logout() {
 
     }
+
+    /**
+     * 获取一个用户中心的实现类
+     *
+     * @return 用户中心的规范接口
+     */
+    public static UserCenter getUserCenter() {
+        return UserDispatcher.instance();
+    }
+
+    /**
+     * 获取一个消息中心的实现类
+     *
+     * @return 消息中心的规范接口
+     */
+    public static MessageCenter getMessageCenter() {
+        return MessageDispatcher.instance();
+    }
+
+    /**
+     * 获取一个群处理中心的实现类
+     *
+     * @return 群中心的规范接口
+     */
+    public static GroupCenter getGroupCenter() {
+        return GroupDispatcher.instance();
+    }
+
+
 }

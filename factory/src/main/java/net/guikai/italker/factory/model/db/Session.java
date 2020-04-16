@@ -179,6 +179,13 @@ public class Session extends BaseDbModel<Session> {
     }
 
     /**
+     * 刷新会话对应的信息为当前Message的最新状态
+     */
+    public void refreshToNow() {
+        // TODO 刷新会话
+    }
+
+    /**
      * 对于会话信息，最重要的部分进行提取
      * 其中我们主要关注两个点：
      * 一个会话最重要的是标示是和人聊天还是在群聊天；
