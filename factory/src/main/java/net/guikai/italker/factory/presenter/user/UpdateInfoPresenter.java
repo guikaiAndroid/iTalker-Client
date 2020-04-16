@@ -2,7 +2,7 @@ package net.guikai.italker.factory.presenter.user;
 
 import android.text.TextUtils;
 
-import net.guikai.italker.common.presenter.BasePresenter;
+import net.guikai.italker.factory.presenter.BasePresenter;
 import net.guikai.italker.factory.Factory;
 import net.guikai.italker.factory.R;
 import net.guikai.italker.factory.data.DataSource;

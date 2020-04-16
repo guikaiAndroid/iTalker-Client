@@ -2,7 +2,7 @@ package net.guikai.italker.common.app;
 
 import android.content.Context;
 
-import net.guikai.italker.common.presenter.BaseContract;
+import net.guikai.italker.factory.presenter.BaseContract;
 
 /**
  * Description: PresenterFragment在BaseFragment上进行MVP的封装

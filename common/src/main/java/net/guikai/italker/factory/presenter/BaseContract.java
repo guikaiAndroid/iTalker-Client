@@ -1,4 +1,4 @@
-package net.guikai.italker.common.presenter;
+package net.guikai.italker.factory.presenter;
 
 import android.support.annotation.StringRes;
 

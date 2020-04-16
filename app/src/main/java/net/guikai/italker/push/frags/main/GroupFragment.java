@@ -1,7 +1,7 @@
 package net.guikai.italker.push.frags.main;
 
 import net.guikai.italker.common.app.PresenterFragment;
-import net.guikai.italker.common.presenter.BaseContract;
+import net.guikai.italker.factory.presenter.BaseContract;
 import net.guikai.italker.push.R;
 
 /**

@@ -4,7 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 
 import net.guikai.italker.common.R;
-import net.guikai.italker.common.presenter.BaseContract;
+import net.guikai.italker.factory.presenter.BaseContract;
 
 /**
  * Description:

@@ -3,7 +3,7 @@ package net.guikai.italker.factory.presenter.account;
 import android.text.TextUtils;
 
 import net.guikai.italker.common.Common;
-import net.guikai.italker.common.presenter.BasePresenter;
+import net.guikai.italker.factory.presenter.BasePresenter;
 import net.guikai.italker.factory.R;
 import net.guikai.italker.factory.data.DataSource;
 import net.guikai.italker.factory.data.helper.AccountHelper;

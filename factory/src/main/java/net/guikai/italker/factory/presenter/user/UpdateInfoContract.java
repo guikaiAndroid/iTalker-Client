@@ -1,6 +1,6 @@
 package net.guikai.italker.factory.presenter.user;
 
-import net.guikai.italker.common.presenter.BaseContract;
+import net.guikai.italker.factory.presenter.BaseContract;
 
 /**
  * Description: 更新用户信息契约

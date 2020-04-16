@@ -5,13 +5,12 @@ import android.support.v7.util.DiffUtil;
 
 import com.raizlabs.android.dbflow.config.DatabaseDefinition;
 import com.raizlabs.android.dbflow.config.FlowManager;
-import com.raizlabs.android.dbflow.sql.language.CursorResult;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
 import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 
-import net.guikai.italker.common.presenter.BasePresenter;
+import net.guikai.italker.factory.presenter.BasePresenter;
 import net.guikai.italker.factory.data.DataSource;
 import net.guikai.italker.factory.data.helper.UserHelper;
 import net.guikai.italker.factory.model.card.UserCard;

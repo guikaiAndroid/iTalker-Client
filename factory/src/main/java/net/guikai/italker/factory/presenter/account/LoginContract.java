@@ -1,6 +1,6 @@
 package net.guikai.italker.factory.presenter.account;
 
-import net.guikai.italker.common.presenter.BaseContract;
+import net.guikai.italker.factory.presenter.BaseContract;
 
 /**
  * Description: 登录契约接口
