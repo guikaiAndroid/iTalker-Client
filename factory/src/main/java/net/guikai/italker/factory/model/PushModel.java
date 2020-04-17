@@ -3,7 +3,6 @@ package net.guikai.italker.factory.model;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-
 import net.guikai.italker.factory.Factory;
 
 import java.lang.reflect.Type;

@@ -119,6 +119,8 @@ public class DbHelper {
                 ModelAdapter<Model> adapter = FlowManager.getModelAdapter(tClass);
                 // 保存
                 adapter.saveAll(Arrays.asList(models));
+                // 唤起通知
+                instance.notifySave(tClass, models);
             }
         }).build().execute();
     }
@@ -283,8 +285,6 @@ public class DbHelper {
             }
         }).build().execute();
     }
-
-
 
     /**
      * 通知监听器
