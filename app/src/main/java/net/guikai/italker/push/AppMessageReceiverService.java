@@ -66,7 +66,7 @@ public class AppMessageReceiverService extends GTIntentService {
     @Override
     public void onNotificationMessageClicked(Context context, GTNotificationMessage gtNotificationMessage) {
         // 当通知栏消息点击时回调
-        Log.i(TAG, "onNotificationMessageClicked() called with: context = [" + context + "], gtNotificationMessage = [" + gtNotificationMessage + "]");
+        Log.i(TAG, "on  NotificationMessageClicked() called with: context = [" + context + "], gtNotificationMessage = [" + gtNotificationMessage + "]");
     }
 
     /**
@@ -91,6 +91,6 @@ public class AppMessageReceiverService extends GTIntentService {
      */
     private void onMessageArrived(String message) {
         // 交给Factory处理
-//        Factory.dispatchPush(message);
+        Factory.dispatchPush(message);
     }
 }

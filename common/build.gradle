@@ -39,6 +39,9 @@ dependencies {
 
     api "com.google.code.gson:gson:$rootProject.ext.gsonVersion"
 
+    // 空气面板
+    api "net.qiujuer.widget:airpanel:$rootProject.ext.airpanelVersion"
+
     api "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
 

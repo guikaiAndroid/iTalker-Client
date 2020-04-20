@@ -131,7 +131,7 @@ public class AccountHelper {
         @Override
         public void onFailure(Call<RspModel<AccountRspModel>> call, Throwable t) {
             //网络请求失败
-            if (call != null) {
+            if (callback != null) {
                 callback.onDataNotAvailable(R.string.data_network_error);
             }
         }
