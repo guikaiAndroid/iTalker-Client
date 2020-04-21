@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import net.qiujuer.widget.airpanel.AirPanelLinearLayout;
 
 /**
- * Description:
+ * Description: 底部弹出 空气面板
  * Crete by Anding on 2020-04-20
  */
 public class MessageLayout extends AirPanelLinearLayout {

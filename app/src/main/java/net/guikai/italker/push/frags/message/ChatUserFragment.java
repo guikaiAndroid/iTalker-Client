@@ -14,6 +14,7 @@ import com.bumptech.glide.request.target.ViewTarget;
 import net.guikai.italker.common.widget.PortraitView;
 import net.guikai.italker.factory.model.db.User;
 import net.guikai.italker.factory.presenter.message.ChatContract;
+import net.guikai.italker.factory.presenter.message.ChatUserPresenter;
 import net.guikai.italker.push.R;
 import net.guikai.italker.push.activities.PersonalActivity;
 
@@ -130,7 +131,7 @@ public class ChatUserFragment extends ChatFragment<User>
 
     @Override
     protected ChatContract.Presenter initPresenter() {
-        return null;
+        return new ChatUserPresenter(this, mReceiverId);
     }
 
     @Override
