@@ -85,7 +85,7 @@ public class AppMessageReceiverService extends GTIntentService {
     }
 
     /**
-     * 消息达到时
+     * 好友发送消息过来 消息达到时
      *
      * @param message 新消息
      */

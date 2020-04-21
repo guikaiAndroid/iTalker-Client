@@ -1,10 +1,13 @@
 package net.guikai.italker.factory.presenter.message;
 
+import android.support.v7.util.DiffUtil;
+
 import net.guikai.italker.factory.data.helper.MessageHelper;
 import net.guikai.italker.factory.data.message.MessageDataSource;
 import net.guikai.italker.factory.model.api.message.MsgCreateModel;
 import net.guikai.italker.factory.model.db.Message;
 import net.guikai.italker.factory.presenter.BaseSourcePresenter;
+import net.guikai.italker.factory.utils.DiffUiDataCallback;
 
 import java.util.List;
 
@@ -28,9 +31,21 @@ public class ChatPresenter<View extends ChatContract.View>
         this.mReceiverType = receiverType;
     }
 
+    // 聊天界面的回调 更新
     @Override
     public void onDataLoaded(List<Message> messages) {
+        ChatContract.View view = getView();
+        if (view == null)
+            return;
+        // 拿到老数据
+        @SuppressWarnings("unchecked")
+        List<Message> old = view.getRecyclerAdapter().getItems();
+        // 差异计算
+        DiffUiDataCallback<Message> callback = new DiffUiDataCallback<>(old, messages);
+        final DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
 
+        // 进行界面刷新
+        refreshData(result, messages);
     }
 
     @Override

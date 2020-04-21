@@ -19,7 +19,7 @@ import java.util.List;
  * Crete by Anding on 2020-04-21
  */
 public class MessageRepository extends BaseDbRepository<Message>
-        implements MessageDataSource{
+        implements MessageDataSource {
 
     // 聊天的对象Id
     private String receiverId;
