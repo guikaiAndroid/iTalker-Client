@@ -16,6 +16,7 @@ import net.guikai.italker.factory.model.db.User;
 import net.guikai.italker.factory.presenter.contact.ContactContract;
 import net.guikai.italker.factory.presenter.contact.ContactPresenter;
 import net.guikai.italker.push.R;
+import net.guikai.italker.push.activities.MessageActivity;
 import net.guikai.italker.push.activities.PersonalActivity;
 
 import butterknife.BindView;
@@ -65,8 +66,7 @@ implements ContactContract.View{
         mAdapter.setListener(new BaseRecyclerAdapter.AdapterListenerImpl<User>() {
             @Override
             public void onItemClick(BaseRecyclerAdapter.ViewHolder holder, User user) {
-                // TODO 跳转到聊天界面
-
+                MessageActivity.show(getContext(), user);
             }
         });
 
