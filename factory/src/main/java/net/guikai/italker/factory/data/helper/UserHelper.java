@@ -10,6 +10,7 @@ import net.guikai.italker.factory.model.api.user.UserUpdateModel;
 import net.guikai.italker.factory.model.card.UserCard;
 import net.guikai.italker.factory.model.db.User;
 import net.guikai.italker.factory.model.db.User_Table;
+import net.guikai.italker.factory.model.db.view.UserSampleModel;
 import net.guikai.italker.factory.net.Network;
 import net.guikai.italker.factory.net.RemoteService;
 import net.guikai.italker.factory.persistence.Account;
@@ -202,5 +203,20 @@ public class UserHelper {
                 .orderBy(User_Table.name, true)
                 .limit(100)
                 .queryList();
+    }
+
+    // 获取一个联系人列表，
+    // 但是是一个简单的数据的
+    public static List<UserSampleModel> getSampleContact() {
+        //"select id = ??";
+        //"select User_id = ??";
+        return SQLite.select(User_Table.id.withTable().as("id"),
+                User_Table.name.withTable().as("name"),
+                User_Table.portrait.withTable().as("portrait"))
+                .from(User.class)
+                .where(User_Table.isFollow.eq(true))
+                .and(User_Table.id.notEq(Account.getUserId()))
+                .orderBy(User_Table.name, true)
+                .queryCustomList(UserSampleModel.class);
     }
 }

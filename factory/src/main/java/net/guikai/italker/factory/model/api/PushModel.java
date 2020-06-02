@@ -1,4 +1,4 @@
-package net.guikai.italker.factory.model;
+package net.guikai.italker.factory.model.api;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

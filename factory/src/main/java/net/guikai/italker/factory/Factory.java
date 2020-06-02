@@ -17,7 +17,7 @@ import net.guikai.italker.factory.data.message.MessageCenter;
 import net.guikai.italker.factory.data.message.MessageDispatcher;
 import net.guikai.italker.factory.data.user.UserCenter;
 import net.guikai.italker.factory.data.user.UserDispatcher;
-import net.guikai.italker.factory.model.PushModel;
+import net.guikai.italker.factory.model.api.PushModel;
 import net.guikai.italker.factory.model.api.RspModel;
 import net.guikai.italker.factory.model.card.GroupCard;
 import net.guikai.italker.factory.model.card.GroupMemberCard;

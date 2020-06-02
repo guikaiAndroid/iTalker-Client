@@ -23,8 +23,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:replace="android:allowBackup"
         tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:allowBackup"
         tools:targetApi="m">
 
         <!-- 个推的Service服务,维持长链接接收消息，process 名字不可更改 -->
@@ -43,7 +43,8 @@
             android:label="AppMessageReceiverService"
             android:permission="1000" />
 
-        <activity android:name=".LaunchActivity"
+        <activity
+            android:name=".LaunchActivity"
             android:label="@string/title_activity_launch"
             android:theme="@style/AppTheme.TransStatusBar">
             <intent-filter>
@@ -54,7 +55,7 @@
         <activity
             android:name=".activities.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Main"/>
+            android:theme="@style/AppTheme.Main" />
         <activity
             android:name=".activities.AccountActivity"
             android:screenOrientation="portrait"
@@ -78,12 +79,16 @@
             android:label="@string/title_activity_personal"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TransStatusBar" />
-        <activity android:name=".activities.MessageActivity"
+        <activity
+            android:name=".activities.MessageActivity"
             android:label="@string/title_activity_message"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Message"
-            android:windowSoftInputMode="adjustResize"
-            />
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".activities.GroupCreateActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Group.Create" />
     </application>
 
 </manifest>

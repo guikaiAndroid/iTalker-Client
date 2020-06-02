@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide;
 import net.guikai.italker.common.app.PresenterFragment;
 import net.guikai.italker.common.widget.EmptyView;
 import net.guikai.italker.common.widget.PortraitView;
-import net.guikai.italker.common.widget.convention.PlaceHolderView;
 import net.guikai.italker.common.widget.recycler.BaseRecyclerAdapter;
 import net.guikai.italker.factory.model.db.Session;
 import net.guikai.italker.factory.presenter.message.SessionContract;
@@ -54,11 +53,13 @@ public class ActiveFragment extends PresenterFragment<SessionContract.Presenter>
             @Override
             protected int getItemViewType(int position, Session session) {
                 // 返回cell的布局id
-                return R.layout.cell_chat_list;            }
+                return R.layout.cell_chat_list;
+            }
 
             @Override
             protected ViewHolder<Session> onCreateViewHolder(View root, int viewType) {
-                return new ActiveFragment.ViewHolder(root);            }
+                return new ActiveFragment.ViewHolder(root);
+            }
         });
 
         // 点击事件监听

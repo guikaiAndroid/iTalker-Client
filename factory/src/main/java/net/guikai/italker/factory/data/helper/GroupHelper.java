@@ -3,7 +3,10 @@ package net.guikai.italker.factory.data.helper;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import net.guikai.italker.factory.Factory;
+import net.guikai.italker.factory.R;
+import net.guikai.italker.factory.data.DataSource;
 import net.guikai.italker.factory.model.api.RspModel;
+import net.guikai.italker.factory.model.api.group.GroupCreateModel;
 import net.guikai.italker.factory.model.card.GroupCard;
 import net.guikai.italker.factory.model.db.Group;
 import net.guikai.italker.factory.model.db.Group_Table;
@@ -11,6 +14,8 @@ import net.guikai.italker.factory.model.db.User;
 import net.guikai.italker.factory.net.Network;
 import net.guikai.italker.factory.net.RemoteService;
 
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -40,5 +45,30 @@ public class GroupHelper {
         return null;
     }
 
+    // 群的创建
+    public static void create(GroupCreateModel model, final DataSource.CallBack<GroupCard> callback) {
+        RemoteService service = Network.remote();
+        service.groupCreate(model)
+                .enqueue(new Callback<RspModel<GroupCard>>() {
+                    @Override
+                    public void onResponse(Call<RspModel<GroupCard>> call, Response<RspModel<GroupCard>> response) {
+                        RspModel<GroupCard> rspModel = response.body();
+                        if (rspModel.success()) {
+                            GroupCard groupCard = rspModel.getResult();
+                            // 唤起进行保存的操作
+                            Factory.getGroupCenter().dispatch(groupCard);
+                            // 返回数据
+                            callback.onDataLoaded(groupCard);
+                        } else {
+                            Factory.decodeRspCode(rspModel, callback);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RspModel<GroupCard>> call, Throwable t) {
+                        callback.onDataNotAvailable(R.string.data_network_error);
+                    }
+                });
+    }
 
 }

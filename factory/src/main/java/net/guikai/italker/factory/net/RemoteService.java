@@ -4,8 +4,10 @@ import net.guikai.italker.factory.model.api.RspModel;
 import net.guikai.italker.factory.model.api.account.AccountRspModel;
 import net.guikai.italker.factory.model.api.account.LoginModel;
 import net.guikai.italker.factory.model.api.account.RegisterModel;
+import net.guikai.italker.factory.model.api.group.GroupCreateModel;
 import net.guikai.italker.factory.model.api.message.MsgCreateModel;
 import net.guikai.italker.factory.model.api.user.UserUpdateModel;
+import net.guikai.italker.factory.model.card.GroupCard;
 import net.guikai.italker.factory.model.card.MessageCard;
 import net.guikai.italker.factory.model.card.UserCard;
 
@@ -76,4 +78,9 @@ public interface RemoteService {
     @POST("msg")
     Call<RspModel<MessageCard>> msgPush(@Body MsgCreateModel model);
 
+    // 创建群
+    @POST("group")
+    Call<RspModel<GroupCard>> groupCreate(@Body GroupCreateModel model);
+
 }
+
