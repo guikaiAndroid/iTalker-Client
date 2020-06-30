@@ -91,7 +91,7 @@ public class GroupCreatePresenter extends BaseRecyclerPresenter<GroupCreateContr
                 viewModel.author = sampleModel;
                 models.add(viewModel);
             }
-                refreshData(models);
+            refreshData(models);
         }
     };
 
