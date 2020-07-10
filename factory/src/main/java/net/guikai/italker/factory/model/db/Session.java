@@ -190,7 +190,38 @@ public class Session extends BaseDbModel<Session> {
     public void refreshToNow() {
         Message message;
         if (receiverType == Message.RECEIVER_TYPE_GROUP) {
+            // 刷新当前对应的群的相关信息
+            message = MessageHelper.findLastWithGroup(id);
+            if (message == null) {
+                // 如果没有基本信息
+                if (TextUtils.isEmpty(picture)
+                        || TextUtils.isEmpty(this.title)) {
+                    // 查询群
+                    Group group = GroupHelper.findFromLocal(id);
+                    if (group != null) {
+                        this.picture = group.getPicture();
+                        this.title = group.getName();
+                    }
+                }
 
+                this.message = null;
+                this.content = "";
+                this.modifyAt = new Date(System.currentTimeMillis());
+            } else {
+                // 本地有最后一条聊天记录
+                if (TextUtils.isEmpty(picture)
+                        || TextUtils.isEmpty(this.title)) {
+                    // 如果没有基本信息, 直接从Message中去load群信息
+                    Group group = message.getGroup();
+                    group.load();
+                    this.picture = group.getPicture();
+                    this.title = group.getName();
+                }
+
+                this.message = message;
+                this.content = message.getSampleContent();
+                this.modifyAt = message.getCreateAt();
+            }
         } else {
             // 和人聊天的
             message = MessageHelper.findLastWithUser(id);

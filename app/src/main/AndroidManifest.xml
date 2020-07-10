@@ -25,7 +25,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup"
-        tools:targetApi="m">
+        android:networkSecurityConfig="@xml/network_security_config"
+        tools:targetApi="n">
 
         <!-- 个推的Service服务,维持长链接接收消息，process 名字不可更改 -->
         <service
