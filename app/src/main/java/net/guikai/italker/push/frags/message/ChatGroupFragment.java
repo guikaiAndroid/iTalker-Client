@@ -20,6 +20,7 @@ import net.guikai.italker.factory.model.db.view.MemberUserModel;
 import net.guikai.italker.factory.presenter.message.ChatContract;
 import net.guikai.italker.factory.presenter.message.ChatGroupPresenter;
 import net.guikai.italker.push.R;
+import net.guikai.italker.push.activities.GroupMemberActivity;
 import net.guikai.italker.push.activities.PersonalActivity;
 
 import java.util.List;
@@ -123,7 +124,7 @@ public class ChatGroupFragment extends ChatFragment<Group>
                 public boolean onMenuItemClick(MenuItem item) {
                     if (item.getItemId() == R.id.action_add) {
                         // mReceiverId 就是群的Id
-//                        GroupMemberActivity.showAdmin(getContext(), mReceiverId );
+                        GroupMemberActivity.showAdmin(getContext(), mReceiverId );
                         return true;
                     }
                     return false;
@@ -163,7 +164,7 @@ public class ChatGroupFragment extends ChatFragment<Group>
                 @Override
                 public void onClick(View v) {
                     // mReceiverId 就是群的Id
-//                    GroupMemberActivity.show(getContext(), mReceiverId );
+                    GroupMemberActivity.show(getContext(), mReceiverId );
                 }
             });
         } else {
