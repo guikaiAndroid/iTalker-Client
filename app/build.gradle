@@ -61,6 +61,8 @@ dependencies {
     api "pub.devrel:easypermissions:$rootProject.ext.easyPMVersion"
 
     api "com.getui:sdk:$rootProject.ext.getuiVersion"
+    // 空气面板
+    api "net.qiujuer.widget:airpanel:$rootProject.ext.airpanelVersion"
 
     api 'com.android.support.constraint:constraint-layout:1.1.3'
     api "com.android.support:support-v4:$rootProject.ext.supportVersion"

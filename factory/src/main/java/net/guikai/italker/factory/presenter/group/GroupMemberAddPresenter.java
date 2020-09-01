@@ -116,6 +116,9 @@ public class GroupMemberAddPresenter extends BaseRecyclerPresenter<GroupCreateCo
                 viewModel.author = model;
                 models.add(viewModel);
             }
+            if (models.size() == 0) {
+                getView().dismissDialog();
+            }
 
             refreshData(models);
         }

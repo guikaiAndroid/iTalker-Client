@@ -110,6 +110,11 @@
         android:background="@color/white_alpha_224"
         android:visibility="gone">
 
+        <fragment
+            android:id="@+id/frag_panel"
+            class="net.guikai.italker.push.frags.panel.PanelFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </net.qiujuer.widget.airpanel.AirPanelFrameLayout>
 
 </net.guikai.italker.common.widget.MessageLayout>

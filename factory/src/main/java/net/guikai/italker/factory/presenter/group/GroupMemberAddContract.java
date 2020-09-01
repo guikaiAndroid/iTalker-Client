@@ -21,6 +21,9 @@ public interface GroupMemberAddContract {
         // 添加群成员成功
         void onAddedSucceed();
 
+        // 群成员为空直接dismiss
+        void dismissDialog();
+
         // 获取群的Id
         String getGroupId();
     }

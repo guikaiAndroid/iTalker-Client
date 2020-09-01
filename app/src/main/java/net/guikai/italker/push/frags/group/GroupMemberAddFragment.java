@@ -135,6 +135,11 @@ public class GroupMemberAddFragment extends BottomSheetDialogFragment
     }
 
     @Override
+    public void dismissDialog() {
+        dismiss();
+    }
+
+    @Override
     public String getGroupId() {
         return mCallback.getGroupId();
     }

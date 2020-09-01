@@ -47,5 +47,6 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     api project(path: ':lang')
+    api project(':face-res')
 
 }

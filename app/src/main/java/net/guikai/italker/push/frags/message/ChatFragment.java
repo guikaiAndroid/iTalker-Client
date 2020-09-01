@@ -23,14 +23,19 @@ import net.guikai.italker.common.app.PresenterFragment;
 import net.guikai.italker.common.widget.PortraitView;
 import net.guikai.italker.common.widget.adapter.TextWatcherAdapter;
 import net.guikai.italker.common.widget.recycler.BaseRecyclerAdapter;
+import net.guikai.italker.face.Face;
 import net.guikai.italker.factory.model.db.Message;
 import net.guikai.italker.factory.model.db.User;
 import net.guikai.italker.factory.persistence.Account;
 import net.guikai.italker.factory.presenter.message.ChatContract;
 import net.guikai.italker.push.R;
 import net.guikai.italker.push.activities.MessageActivity;
+import net.guikai.italker.push.frags.panel.PanelFragment;
+import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.widget.Loading;
+import net.qiujuer.widget.airpanel.AirPanel;
+import net.qiujuer.widget.airpanel.Util;
 
 import java.util.Objects;
 
@@ -44,7 +49,7 @@ import butterknife.OnClick;
 public abstract class ChatFragment<InitModel>
         extends PresenterFragment<ChatContract.Presenter>
         implements AppBarLayout.OnOffsetChangedListener,
-        ChatContract.View<InitModel> {
+        ChatContract.View<InitModel> ,PanelFragment.PanelCallback{
 
     protected String mReceiverId;
     protected Adapter mAdapter;
@@ -66,6 +71,10 @@ public abstract class ChatFragment<InitModel>
 
     @BindView(R.id.btn_submit)
     View mSubmit;
+
+    // 控制顶部面板与软键盘过度的Boss控件
+    private AirPanel.Boss mPanelBoss;
+    private PanelFragment mPanelFragment;
 
     @Override
     protected void initArgs(Bundle bundle) {
@@ -94,7 +103,33 @@ public abstract class ChatFragment<InitModel>
         // 在这里进行了控件绑定
         super.initWidget(root);
 
-        // TODO 空气面板
+        // 初始化面板操作
+        mPanelBoss = (AirPanel.Boss) root.findViewById(R.id.lay_content);
+        mPanelBoss.setup(new AirPanel.PanelListener() {
+            @Override
+            public void requestHideSoftKeyboard() {
+                // 请求隐藏软键盘
+                Util.hideKeyboard(mContent);
+            }
+        });
+        mPanelBoss.setOnStateChangedListener(new AirPanel.OnStateChangedListener() {
+            @Override
+            public void onPanelStateChanged(boolean isOpen) {
+                // 面板改变
+                if (isOpen)
+                    onBottomPanelOpened();
+            }
+
+            @Override
+            public void onSoftKeyboardStateChanged(boolean isOpen) {
+                // 软键盘改变
+                if (isOpen)
+                    onBottomPanelOpened();
+            }
+        });
+        mPanelFragment = (PanelFragment) getChildFragmentManager().findFragmentById(R.id.frag_panel);
+        mPanelFragment.setup(this);
+
         initToolbar();
         initAppbar();
         initEditContent();
@@ -154,7 +189,9 @@ public abstract class ChatFragment<InitModel>
 
     @OnClick(R.id.btn_face)
     void onFaceClick() {
-
+        // 仅仅只需请求打开即可
+        mPanelBoss.openPanel();
+        mPanelFragment.showFace();
     }
 
     @OnClick(R.id.btn_record)
@@ -186,6 +223,24 @@ public abstract class ChatFragment<InitModel>
     @Override
     public void onAdapterDataChanged() {
         // 界面没有占位布局，Recycler是一直显示的，所有不需要做任何事情
+    }
+
+
+    private void onBottomPanelOpened() {
+        // 当底部面板或者软键盘打开时触发
+        if (mAppBarLayout != null)
+            mAppBarLayout.setExpanded(false, true);
+    }
+
+    @Override
+    public EditText getInputEditText() {
+        // 返回输入框
+        return mContent;
+    }
+
+    @Override
+    public void onSendGallery(String[] paths) {
+
     }
 
     // 内容的适配器
@@ -311,6 +366,10 @@ public abstract class ChatFragment<InitModel>
         protected void onBind(Message message) {
             super.onBind(message);
             Spannable spannable = new SpannableString(message.getContent());
+
+            // 解析表情
+            Face.decode(mContent, spannable, (int) Ui.dipToPx(getResources(), 20));
+
             // 把内容设置到布局上
             mContent.setText(spannable);
         }
