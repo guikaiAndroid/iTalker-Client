@@ -15,6 +15,7 @@ import net.guikai.italker.common.app.PresenterFragment;
 import net.guikai.italker.common.widget.EmptyView;
 import net.guikai.italker.common.widget.PortraitView;
 import net.guikai.italker.common.widget.recycler.BaseRecyclerAdapter;
+import net.guikai.italker.face.Face;
 import net.guikai.italker.factory.model.db.Session;
 import net.guikai.italker.factory.presenter.message.SessionContract;
 import net.guikai.italker.factory.presenter.message.SessionPresenter;
@@ -128,6 +129,8 @@ public class ActiveFragment extends PresenterFragment<SessionContract.Presenter>
 
             String str = TextUtils.isEmpty(session.getContent()) ? "" : session.getContent();
             Spannable spannable = new SpannableString(str);
+            // 解析表情
+            Face.decode(mContent, spannable, (int) mContent.getTextSize());
 
             //  把内容设置到布局上
             mContent.setText(spannable);

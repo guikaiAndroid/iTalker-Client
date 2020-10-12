@@ -233,6 +233,16 @@ public abstract class ChatFragment<InitModel>
     }
 
     @Override
+    public boolean onBackPressed() {
+        if (mPanelBoss.isOpen()) {
+            // 关闭面板并且返回true代表自己已经处理了消费了返回
+            mPanelBoss.closePanel();
+            return true;
+        }
+        return super.onBackPressed();
+    }
+
+    @Override
     public EditText getInputEditText() {
         // 返回输入框
         return mContent;
