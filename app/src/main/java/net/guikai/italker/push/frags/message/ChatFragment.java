@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -212,7 +213,8 @@ public abstract class ChatFragment<InitModel>
     }
 
     private void onMoreClick() {
-
+        mPanelBoss.openPanel();
+        mPanelFragment.showGallery();
     }
 
     @Override
@@ -250,7 +252,8 @@ public abstract class ChatFragment<InitModel>
 
     @Override
     public void onSendGallery(String[] paths) {
-
+        // 图片回调回来
+        mPresenter.pushImages(paths);
     }
 
     // 内容的适配器
@@ -287,9 +290,11 @@ public abstract class ChatFragment<InitModel>
                 case R.layout.cell_chat_text_right:
                 case R.layout.cell_chat_text_left:
                     return new TextHolder(root);
+
                 case R.layout.cell_chat_audio_right:
                 case R.layout.cell_chat_audio_left:
                     return new AudioHolder(root);
+
                 case R.layout.cell_chat_pic_right:
                 case R.layout.cell_chat_pic_left:
                     return new PicHolder(root);
@@ -395,9 +400,23 @@ public abstract class ChatFragment<InitModel>
 
     // 图片的Holder
     class PicHolder extends BaseHolder {
+        @BindView(R.id.im_image)
+        ImageView mContent;
 
         public PicHolder(View itemView) {
             super(itemView);
+        }
+
+        @Override
+        protected void onBind(Message message) {
+            super.onBind(message);
+            // 当是图片类型的时候，Content中就是具体的地址
+            String content = message.getContent();
+
+            Glide.with(ChatFragment.this)
+                    .load(content)
+                    .fitCenter()
+                    .into(mContent);
         }
     }
 }

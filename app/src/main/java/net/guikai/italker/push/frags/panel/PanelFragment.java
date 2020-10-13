@@ -12,9 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import net.guikai.italker.common.app.BaseFragment;
 import net.guikai.italker.common.tools.UiTool;
+import net.guikai.italker.common.widget.GalleryView;
 import net.guikai.italker.common.widget.recycler.BaseRecyclerAdapter;
 import net.guikai.italker.face.Face;
 import net.guikai.italker.push.R;
@@ -39,6 +41,7 @@ public class PanelFragment extends BaseFragment {
         super.initWidget(root);
 
         initFace(root);
+        initGallery(root);
     }
 
     // 初始化表情
@@ -125,6 +128,43 @@ public class PanelFragment extends BaseFragment {
         });
     }
 
+    // 初始化图片
+    private void initGallery(View root) {
+        final View galleryPanel = mGalleryPanel = root.findViewById(R.id.lay_gallery_panel);
+        final GalleryView galleryView = galleryPanel.findViewById(R.id.view_gallery);
+        final TextView selectedSize = galleryPanel.findViewById(R.id.txt_gallery_select_count);
+
+        galleryView.setup(getLoaderManager(), new GalleryView.SelectedChangeListener() {
+            @Override
+            public void onSelectedCountChanged(int count) {
+                String resStr = getText(R.string.label_gallery_selected_size).toString();
+                selectedSize.setText(String.format(resStr, count));
+            }
+        });
+
+        // 点击事件
+        galleryPanel.findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onGalleySendClick(galleryView, galleryView.getSelectedPath());
+            }
+        });
+    }
+
+    // 点击的时候触发，传回一个控件和选中的路径
+    private void onGalleySendClick(GalleryView galleryView, String[] paths) {
+        // 通知给聊天界面
+        // 清理状态
+        galleryView.clear();
+
+        // 删除逻辑
+        PanelCallback callback = mCallback;
+        if (callback == null)
+            return;
+
+        callback.onSendGallery(paths);
+    }
+
     @Override
     protected int getContentLayoutId() {
         return R.layout.fragment_panel;
@@ -137,8 +177,13 @@ public class PanelFragment extends BaseFragment {
 
     public void showFace() {
 //        mRecordPanel.setVisibility(View.GONE);
-//        mGalleryPanel.setVisibility(View.GONE);
+        mGalleryPanel.setVisibility(View.GONE);
         mFacePanel.setVisibility(View.VISIBLE);
+    }
+
+    public void showGallery() {
+        mGalleryPanel.setVisibility(View.VISIBLE);
+        mFacePanel.setVisibility(View.GONE);
     }
 
     // 回调聊天界面的Callback
