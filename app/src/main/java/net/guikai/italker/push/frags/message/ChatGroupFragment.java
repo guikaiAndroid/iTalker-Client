@@ -23,6 +23,7 @@ import net.guikai.italker.push.R;
 import net.guikai.italker.push.activities.GroupMemberActivity;
 import net.guikai.italker.push.activities.PersonalActivity;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -171,4 +172,5 @@ public class ChatGroupFragment extends ChatFragment<Group>
             mMemberMore.setVisibility(View.GONE);
         }
     }
+
 }

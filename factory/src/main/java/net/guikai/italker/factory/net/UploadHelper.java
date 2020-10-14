@@ -88,6 +88,17 @@ public class UploadHelper {
     }
 
     /**
+     * 上传音频
+     *
+     * @param path 本地地址
+     * @return 服务器地址
+     */
+    public static String uploadAudio(String path) {
+        String key = getAudioObjKey(path);
+        return upload(key, path);
+    }
+
+    /**
      * 分月存储，避免一个文件夹太多
      *
      * @return yyyyMM
@@ -108,6 +119,13 @@ public class UploadHelper {
         String fileMd5 = HashUtil.getMD5String(new File(path));
         String dateString = getDateString();
         return String.format("portrait/%s/%s.jpg", dateString, fileMd5);
+    }
+
+    // audio/201703/dawewqfas243rfawr234.mp3
+    private static String getAudioObjKey(String path) {
+        String fileMd5 = HashUtil.getMD5String(new File(path));
+        String dateString = getDateString();
+        return String.format("audio/%s/%s.mp3", dateString, fileMd5);
     }
 
 }

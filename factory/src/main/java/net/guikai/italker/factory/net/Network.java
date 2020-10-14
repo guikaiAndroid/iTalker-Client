@@ -32,7 +32,7 @@ public class Network {
     private Network() {
     }
 
-    public static OkHttpClient getClicent() {
+    public static OkHttpClient getClient() {
         if (instance.client != null)
             return instance.client;
 
@@ -69,7 +69,7 @@ public class Network {
             return instance.retrofit;
 
         // 得到一个OkClient
-        OkHttpClient okHttpClient = getClicent();
+        OkHttpClient okHttpClient = getClient();
 
         // Retrofit
         Retrofit.Builder builder = new Retrofit.Builder();

@@ -15,7 +15,7 @@ public class Common {
 
         // 基础的网络请求地址
         // 本地地址，需要自己配置为本地局域网电脑ip地址
-         String API_URL = "http://172.20.10.162:8080/api/";
+         String API_URL = "http://192.168.43.182:8080/api/";
 
         // 最大的上传图片大小860kb
         long MAX_UPLOAD_IMAGE_LENGTH = 860 * 1024;

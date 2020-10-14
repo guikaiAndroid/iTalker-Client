@@ -41,6 +41,8 @@ dependencies {
 
     // 空气面板
     api "net.qiujuer.widget:airpanel:$rootProject.ext.airpanelVersion"
+    // Lame 录音 MP3 转码器
+    api "net.qiujuer.lame:lame:$rootProject.ext.lameVersion"
 
     api "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"

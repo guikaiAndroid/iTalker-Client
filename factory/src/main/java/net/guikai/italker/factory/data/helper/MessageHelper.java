@@ -69,7 +69,7 @@ public class MessageHelper {
                                 content = uploadPicture(card.getContent());
                                 break;
                             case Message.TYPE_AUDIO:
-                                content = "";
+                                content = uploadAudio(card.getContent());
                                 break;
                             default:
                                 content = "";
@@ -156,6 +156,16 @@ public class MessageHelper {
             }
         }
         return null;
+    }
+
+    // 上传语音
+    private static String uploadAudio(String content) {
+        // 上传语音
+        File file = new File(content);
+        if (!file.exists() || file.length() <= 0)
+            return null;
+        // 上传并返回
+        return UploadHelper.uploadAudio(content);
     }
 
     /**
