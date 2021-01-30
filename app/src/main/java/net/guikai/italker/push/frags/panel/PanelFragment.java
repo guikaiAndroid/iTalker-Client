@@ -37,7 +37,7 @@ public class PanelFragment extends BaseFragment {
     private PanelCallback mCallback;
 
     public PanelFragment() {
-        // Required empty public constructor
+         // Required empty public constructor
     }
 
     @Override
